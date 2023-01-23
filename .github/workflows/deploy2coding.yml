@@ -28,5 +28,5 @@ jobs:
       # push
       - name: push to coding
         run: |
-          git push -f https://${{ secrets.USERNAME }}:${{ secrets.TOKEN }}@github.com/${{ secrets.USERNAME }}/${{ secrets.REPO }}.git HEAD:master
+          git push -f https://${{ secrets.USERNAME }}:${{ secrets.TOKEN }}@e.coding.net/luzy999/cdn/cdn.git HEAD:master
 

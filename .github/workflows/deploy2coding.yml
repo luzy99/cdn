@@ -28,7 +28,7 @@ jobs:
       # pull
       - name: pull from coding
         run: |
-          git pull https://${{ secrets.USERNAME }}:${{ secrets.TOKEN }}@e.coding.net/luzy999/cdn/cdn.git HEAD:master
+          git pull https://${{ secrets.USERNAME }}:${{ secrets.TOKEN }}@e.coding.net/luzy999/cdn/cdn.git
       # push
       - name: push to coding
         run: |

@@ -28,6 +28,5 @@ jobs:
       # push
       - name: push to coding
         run: |
-          sh '''url="https://${{ secrets.USERNAME }}:${{ secrets.TOKEN }}@github.com/${{ secrets.USERNAME }}/${{ secrets.REPO }}.git"
-          git push -f $url HEAD:master
+          git push -f https://${{ secrets.USERNAME }}:${{ secrets.TOKEN }}@github.com/${{ secrets.USERNAME }}/${{ secrets.REPO }}.git HEAD:master
 

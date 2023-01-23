@@ -24,7 +24,11 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
-
+      
+      # pull
+      - name: pull from coding
+        run: |
+          git pull https://${{ secrets.USERNAME }}:${{ secrets.TOKEN }}@e.coding.net/luzy999/cdn/cdn.git HEAD:master
       # push
       - name: push to coding
         run: |

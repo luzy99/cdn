@@ -24,17 +24,23 @@ jobs:
           echo "Author: $AUTHOR_NAME"
           if [ "$AUTHOR_NAME" != "imgbot" ]; then
             echo "This commit was not made by ImgBot. Skipping deployment."
-            exit 0
+            exit 1
           fi
         shell: bash
 
       - name: Set up SSH
+        if: ${{ success() }}
         uses: webfactory/ssh-agent@v0.9.0
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
       - name: Push to self-hosted repository
+        if: ${{ success() }}
         env:
           GIT_SSH_COMMAND: ssh -o StrictHostKeyChecking=no
         run: |
           git push -f ${{ secrets.SELF_HOST_REPO }} master:master
+
+      - name: finish
+        if: ${{ !cancelled() }}
+        run: echo "Finished."

@@ -11,36 +11,31 @@ on:
 
 jobs:
   sync:
+    if: ${{ contains(github.actor, 'imgbot') }}
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
       
-      - name: Check commit author
-        id: check_author
-        run: |
-          AUTHOR_NAME=$(git log -1 --pretty=format:'%an')
-          echo "Author: $AUTHOR_NAME"
-          if [ "$AUTHOR_NAME" != "imgbot" ]; then
-            echo "This commit was not made by ImgBot. Skipping deployment."
-            exit 1
-          fi
-        shell: bash
+      # - name: Check commit author
+      #   id: check_author
+      #   run: |
+      #     AUTHOR_NAME=$(git log -1 --pretty=format:'%an')
+      #     echo "Author: $AUTHOR_NAME"
+      #     if [ "$AUTHOR_NAME" != "imgbot" ]; then
+      #       echo "This commit was not made by ImgBot. Skipping deployment."
+      #       exit 1
+      #     fi
+      #   shell: bash
 
       - name: Set up SSH
-        if: ${{ success() }}
         uses: webfactory/ssh-agent@v0.9.0
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
       - name: Push to self-hosted repository
-        if: ${{ success() }}
         env:
           GIT_SSH_COMMAND: ssh -o StrictHostKeyChecking=no
         run: |
           git push -f ${{ secrets.SELF_HOST_REPO }} master:master
-
-      - name: finish
-        if: ${{ !cancelled() }}
-        run: echo "Finished."
